@@ -9,12 +9,12 @@
   ],
   "scripts": {
     "build": "npm run build-lib && npm run build-dist",
-    "build-dist": "rimraf dist && webpack -p",
+    "build-dist": "rimraf dist && webpack",
     "build-lib": "rimraf lib && babel src --ignore \"_*\" --out-dir lib --copy-files",
     "lint": "eslint --max-warnings 0 .",
     "typecheck": "flow",
     "prepare": "npm run build",
-    "start": "webpack-dev-server --content-base assets/",
+    "start": "webpack serve --content-base assets/ --mode production",
     "test": "npm run lint && npm run test-src",
     "test-src": "cross-env BABEL_ENV=test mocha \"src/**/__tests__/*.js\""
   },
@@ -53,7 +53,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.14.5",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.0.0",
+    "babel-loader": "^8.2.2",
     "css-loader": "^0.28.4",
     "css-modules-require-hook": "^4.0.0",
     "eslint": "^7.32.0",
@@ -69,8 +69,9 @@
     "react-test-renderer": "^16.4.0",
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
-    "webpack": "^3.4.0",
-    "webpack-dev-server": "^2.11.5"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "repository": {
     "type": "git",
