@@ -1,11 +1,11 @@
 /*eslint-env node */
 var path = require('path');
-var webpack = require('webpack');
 
 var rules = [
   {
     test: /\.js$/,
     use: ['babel-loader'],
+    type: 'javascript/auto',
     exclude: /node_modules/,
   },
   {
@@ -46,14 +46,8 @@ module.exports = [{
   module: {
     rules: rules,
   },
+  mode: 'production',
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 }, {
   entry: './src/demo.js',
