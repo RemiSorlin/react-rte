@@ -49,9 +49,6 @@ jobs:
   dependsOn: build
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   steps:
-  - checkout: self
-    persistCredentials: true
-    displayName: Checkout
 
   - task: NodeTool@0
     inputs:
@@ -59,6 +56,10 @@ jobs:
     displayName: 'Install Node.js'
 
   - script: |
+      echo '##[command]git config --global user.email "you@example.com"'
+      git config --global user.email "you@example.com"
+      echo '##[command]git config --global user.name "Azure DevOps Service"'
+      git config --global user.name "Azure DevOps Service"
       echo '##[command]execute command: npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}} --allow-same-version'
       npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}} --allow-same-version
     displayName: 'Set package version'
