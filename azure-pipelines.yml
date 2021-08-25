@@ -55,8 +55,8 @@ jobs:
     displayName: 'Install Node.js'
 
   - script: |
-      echo '##[command]execute command: npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}}'
-      npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}}
+      echo '##[command]execute command: npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}} --allow-same-version'
+      npm version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}} --allow-same-version
     displayName: 'Set package version'
 
   - script: |
