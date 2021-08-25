@@ -24,18 +24,29 @@ jobs:
   - script: |
       npm install
       npm run build
-      npm test
     displayName: 'npm install and build'
   
+  - script: npm run lint -- --format junit --output-file test-results/lint-results.xml
+    displayName: 'Run lint'
+
+  - script: npm run test-src -- --reporter mocha-junit-reporter
+    displayName: 'Run tests'
+
   - task: WhiteSource Bolt@20
     inputs:
       cwd: '$(Build.SourcesDirectory)'
     displayName: 'Check dependency'
 
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: '**/test-results/*-results.xml'
+      mergeTestResults: true
+
 - job: publish
   displayName: Publish
   dependsOn: build
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   steps:
   - task: NodeTool@0
     inputs:

@@ -5,3 +5,4 @@ _*
 /dist
 /node_modules
 .idea
+*-results.xml
