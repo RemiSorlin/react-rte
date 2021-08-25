@@ -24,7 +24,7 @@ jobs:
   - script: |
       npm install
       npm run build
-    displayName: 'npm install and build'
+    displayName: 'Build package'
   
   - script: npm run lint -- --format junit --output-file test-results/lint-results.xml
     displayName: 'Run lint'
@@ -35,13 +35,14 @@ jobs:
   - task: WhiteSource Bolt@20
     inputs:
       cwd: '$(Build.SourcesDirectory)'
-    displayName: 'Check dependency'
+    displayName: 'Check dependencies'
 
   - task: PublishTestResults@2
     inputs:
       testRunner: JUnit
       testResultsFiles: '**/test-results/*-results.xml'
       mergeTestResults: true
+    displayName: 'Publish test results'
 
 - job: publish
   displayName: Publish
@@ -53,8 +54,18 @@ jobs:
       versionSpec: '12.x'
     displayName: 'Install Node.js'
 
+  - script: npm git version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}}
+    displayName: 'Set package version'
+
   - script: |
-      npm git version ${{ replace(variables['Build.SourceBranchName'], 'v', '')}}
       npm install
       npm run build
-    displayName: 'npm install and build'
+    displayName: 'Build package'
+  
+  - task: Npm@1
+    inputs:
+      command: 'publish'
+      workingDir: '$(Build.SourcesDirectory)'
+      publishRegistry: 'useFeed'
+      publishFeed: '31fa665b-2d2b-412c-bf5a-ced9e931516c/3ac2fd32-8918-41b1-8b80-df59bc60d88a'
+    displayName: 'Publish package'
