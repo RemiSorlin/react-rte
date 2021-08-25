@@ -49,6 +49,10 @@ jobs:
   dependsOn: build
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   steps:
+  - checkout: self
+    persistCredentials: true
+    displayName: Checkout
+
   - task: NodeTool@0
     inputs:
       versionSpec: '12.x'
