@@ -23,7 +23,6 @@ jobs:
 
   - script: |
       npm install
-      npm run build
     displayName: 'Build package'
   
   - script: npm run lint -- --format junit --output-file test-results/lint-results.xml
@@ -66,7 +65,6 @@ jobs:
 
   - script: |
       npm install
-      npm run build
     displayName: 'Build package'
   
   - task: Npm@1
