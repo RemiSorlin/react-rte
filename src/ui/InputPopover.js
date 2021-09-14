@@ -32,10 +32,10 @@ export default class InputPopover extends Component {
   state: State;
   _inputRef: ?Object;
 
-  constructor() {
-    super(...arguments);
+  constructor(props) {
+    super(props);
     autobind(this);
-    let {checkOptions} = this.props;
+    let {checkOptions} = props;
     let checkOptionValues: CheckOptionValues = {};
     if (checkOptions) {
       for (let key of Object.keys(checkOptions)) {
